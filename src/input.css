@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.quotes-name {
+    width: 10%;
+    text-align: center;
+    border-bottom: 3px solid #F4F4F4;
+    border-radius: 10px;
+    line-height: 0.1em;
+    margin: 10px 0 15px;
+    float: left;
+}
+
+.card-img-content {
+    width: 200px;
+    height: 135px;
+    aspect-ratio: auto;
+}
