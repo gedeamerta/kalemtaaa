@@ -23,13 +23,45 @@
               <img class="text-black" src="./public/img/Logo.svg" alt="">
             </div>
             <div class="m-5">
-              <img src="./public/img/Hamburger.svg" alt="">
+              <button class="mobile-btn-menu" type="button">
+                <img src="./public/img/Hamburger.svg" alt="">
+              </button>
             </div>
           </nav>
         </div>
       </div>
+      <div class="hidden grid gap-x-14 grid-cols-2 h-full mobile-navbar fixed">
+        <div></div>
+        <div class="col-end-auto bg-primary">
+          <div class="m-5">
+            <button class="outline-none">
+              <svg class="mobile-btn-menu" width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="2.87676" height="11.5071" rx="1.43838" transform="matrix(0.718792 -0.695225 0.718792 0.695225 0.440674 1.99998)" fill="#F4F4F4"/>
+                <rect width="2.87676" height="11.5071" rx="1.43838" transform="matrix(0.718792 0.695225 -0.718792 0.695225 8.71187 0)" fill="#F4F4F4"/>
+              </svg>
+            </button>
+            <div class="text-right">
+              <p class="text-third-color text-sm">Blogs</p>
+              <ul class="m-1 text-white">
+                <li>Experiences</li>
+                <li>Knowledge</li>
+                <li>Photography</li>
+                <li>Personal Opinion</li>
+              </ul>
+            </div>
+            <div class="text-right mt-5">
+              <p class="text-third-color text-sm">Strategies</p>
+              <ul class="m-1 text-white">
+                <li>Stock Analyse</li>
+                <li>Investment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
-        <div class="container font-inter">
+        <div class="container">
           <img class="w-full shadow-xl shadow-gray-500 rounded-b-3xl" src="./public/img/banner.jpg" alt="">
           <div class="-mt-24 ml-5 text-secondary">
             <h1 class="w-72 font-medium text-xl">“We learn everyday, 
@@ -42,7 +74,6 @@
           </div>
         </div>
       </div>
-
       <!-- All Posts Section -->
       <div class="container mt-12 p-2">
         <h5 class="text-third-color">All Posts</h5>
@@ -131,13 +162,13 @@
         <h2 class="text-third-color text-sm">Categories</h2>
         <div class="text-primary container mt-2 flex flex-row justify-center items-center">
           <div class="basis-1/2">
-            <img class="object-cover w-44 h-32" src="./public/img/view-1.jpg" alt="">
+            <img class="object-cover w-44 h-32" src="./public/img/buysell.jpg" alt="">
             <div class="relative w-44 hover:bg-gradient-to-t from-gradient duration-500 hover:text-secondary -mt-8 p-1">
               <h1 class="font-bold">Stock Analyse</h1>
             </div>
           </div>
           <div class="basis-1/2">
-            <img class="object-cover w-44 h-32" src="./public/img/opinion.jpg" alt="">
+            <img class="object-cover w-44 h-32" src="./public/img/invest.jpg" alt="">
             <div class="relative w-44 hover:bg-gradient-to-t from-gradient duration-500 hover:text-secondary -mt-8 p-1">
               <h1 class="font-bold">Investing</h1>
             </div>
@@ -170,5 +201,6 @@
         </div>
       </div>
     </div>
+    <script src="./public/js/index.js"></script>
 </body>
 </html>
