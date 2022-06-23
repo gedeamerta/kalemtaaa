@@ -9,14 +9,15 @@ module.exports = {
     maxWidth: {
       'sm': '400px'
     },
-    colors: {
+    extend: {   
+      colors: {
       'primary': '#333333',
       'secondary': '#F4F4F4',
       'third-color': '#BDC3D6',
-      'gradient': 'rgba(0, 0, 0, 1)',
+      'gradient': 'rgba(0, 0, 0, 0.5)',
       'white': 'rgba(255, 255, 255, 1)',
+      },
     },
-    extend: {},
     fontFamily: {
       inter: ["Inter", "sans-serif"],
     },
