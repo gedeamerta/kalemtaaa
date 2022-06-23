@@ -1,0 +1,97 @@
+/*  
+    This process is to get the Organization value with the stored value is JSON contains Access Token, Refresh Token, Expires in, Expired at, Current Request, and Bearer
+
+    We will get the Expired At and Current Request to validate the Access Token is still active or inactive
+
+    If the access token is still active it will do the process to POST request or whatever action that we want to do
+
+    If the access token is already expired or inactive it will Obtain new token following the Buildxact Documentation 
+*/
+response = zoho.crm.getOrgVariable("store_buildxact_token");
+getAccessToken = response.get("access_token");
+getExpiredAt = response.get("expired_at");
+getCurrentReq = response.get("current_request");
+if ( getExpiredAt > getCurrentReq) 
+{
+	getOpp = zoho.crm.getRecordById("Deals", oppId);
+	contactNameDeal = ifnull(getOpp.get("Contact_Name"),"").get("name");
+	contactIdDeal = ifnull(getOpp.get("Contact_Name"),"").get("id");
+	getContact = zoho.crm.getRecordById("Contacts", contactIdDeal);
+	getContactEmail = getContact.get("Email");
+	getContactPhone = getContact.get("Phone");
+	addressDeal = ifnull(getOpp.get("Site_Street"),"");
+	stateDeal = ifnull(getOpp.get("Site_State"),"");
+	postCodeDeal = ifnull(getOpp.get("Site_Post_Code"),"");
+	parameterCustomer = Map();
+	parameterCustomer.put("Name", contactNameDeal);
+	parameterCustomer.put("Address", addressDeal);
+	parameterCustomer.put("State", stateDeal);
+	parameterCustomer.put("PostCode", postCodeDeal);
+	parameterCustomer.put("Email", getContactEmail);
+	parameterCustomer.put("Phone", getContactPhone);
+	parameterCustomer.put("Type", "Business");
+	headersCustomer = Map();
+	headersCustomer.put("Authorization", "Bearer " + getAccessToken);
+	responsePostCustomer = invokeurl
+	[
+		url :"https://api.buildxact.com/customers/create"
+		type :POST
+		parameters: parameterCustomer
+		headers: headersCustomer
+	];
+	info responsePostCustomer;
+} else {
+	parametersRefresh = Map();
+	parametersRefresh.put("username","micah@zirconinteriors.com.au");
+	parametersRefresh.put("password","hye6Y{3K8O");
+	parametersRefresh.put("grant_type","password");
+	parametersRefresh.put("client_id","Zirconinteriors");
+	parametersRefresh.put("client_secret","R@gh#uuAdRrVjx@G@@tM");
+	response = invokeurl
+	[
+		url :"https://api.buildxact.com/oauth/token"
+		type :POST
+		parameters:parametersRefresh
+	];
+	info response;
+	obtainingTokenMap = Map();
+	obtainingTokenMap.put("access_token",response.get("access_token"));
+	obtainingTokenMap.put("token_type","bearer");
+	obtainingTokenMap.put("expires_in", 3600);
+	obtainingTokenMap.put("current_request", now.toLong());
+	obtainingTokenMap.put("expired_at", now.toLong() + (3600*1000));
+	obtainingTokenMap.put("refresh_token", response.get("refresh_token"));
+	valueMap = Map();
+	valueMap.put("apiname","store_buildxact_token");
+	valueMap.put("value", obtainingTokenMap);
+	resp = zoho.crm.invokeConnector("crm.set",valueMap);
+	info resp;
+
+    getOpp = zoho.crm.getRecordById("Deals", oppId);
+	contactNameDeal = ifnull(getOpp.get("Contact_Name"),"").get("name");
+	contactIdDeal = ifnull(getOpp.get("Contact_Name"),"").get("id");
+	getContact = zoho.crm.getRecordById("Contacts", contactIdDeal);
+	getContactEmail = getContact.get("Email");
+	getContactPhone = getContact.get("Phone");
+	addressDeal = ifnull(getOpp.get("Site_Street"),"");
+	stateDeal = ifnull(getOpp.get("Site_State"),"");
+	postCodeDeal = ifnull(getOpp.get("Site_Post_Code"),"");
+	parameterCustomer = Map();
+	parameterCustomer.put("Name", contactNameDeal);
+	parameterCustomer.put("Address", addressDeal);
+	parameterCustomer.put("State", stateDeal);
+	parameterCustomer.put("PostCode", postCodeDeal);
+	parameterCustomer.put("Email", getContactEmail);
+	parameterCustomer.put("Phone", getContactPhone);
+	parameterCustomer.put("Type", "Business");
+	headersCustomer = Map();
+	headersCustomer.put("Authorization", "Bearer " + response.get("access_token"));
+	responsePostCustomer = invokeurl
+	[
+		url :"https://api.buildxact.com/customers/create"
+		type :POST
+		parameters: parameterCustomer
+		headers: headersCustomer
+	];
+	info responsePostCustomer;
+}
